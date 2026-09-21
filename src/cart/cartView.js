@@ -32,40 +32,37 @@ export function renderCart() {
 
   cartContainer.replaceChildren();
 
+  if (products.length === 0) {
+    const emptyMessage = document.createElement("p");
+    emptyMessage.classList.add("empty-cart");
+    emptyMessage.textContent = "Your cart is empty.";
+
+    cartContainer.append(emptyMessage);
+    return;
+  }
+
+  const cartItems = document.createElement("div");
+  cartItems.classList.add("cart-items");
+
   products.forEach((product) => {
     const cartElement = document.createElement("div");
-    const name = document.createElement("p");
+    cartElement.classList.add("cart-item");
+
+    cartElement.dataset.id = product.id;
+
+    const name = document.createElement("h3");
+    name.classList.add("cart-item-name");
     name.textContent = product.name;
 
-    const quantity = document.createElement("p");
-    quantity.textContent = `Quantity : ${product.quantity}`;
+    const price = document.createElement("p");
+    price.classList.add("cart-item-price");
+    price.textContent = `₹${product.price}`;
 
-    //   Subtotal
-    const subTotal = getSubTotal(product.id);
+    const quantityControls = document.createElement("div");
+    quantityControls.classList.add("quantity-controls");
 
-    const subTotalDisplay = document.createElement("span");
-    subTotalDisplay.textContent = `Sub Total = ${subTotal}`;
-
-    // remove logic
-    const removeButton = document.createElement("button");
-    removeButton.textContent = "remove";
-
-    removeButton.addEventListener("click", () => {
-      removeFromCart(product.id);
-      renderCart();
-    });
-
-    // increase button
-    const increaseButton = document.createElement("button");
-    increaseButton.textContent = "+";
-
-    increaseButton.addEventListener("click", () => {
-      increaseQuantity(product.id);
-      renderCart();
-    });
-
-    // Decrease button
     const decreaseButton = document.createElement("button");
+    decreaseButton.classList.add("quantity-button");
     decreaseButton.textContent = "-";
 
     decreaseButton.addEventListener("click", () => {
@@ -73,27 +70,59 @@ export function renderCart() {
       renderCart();
     });
 
+    const quantity = document.createElement("span");
+    quantity.classList.add("cart-item-quantity");
+    quantity.textContent = product.quantity;
+
+    const increaseButton = document.createElement("button");
+    increaseButton.classList.add("quantity-button");
+    increaseButton.textContent = "+";
+
+    increaseButton.addEventListener("click", () => {
+      increaseQuantity(product.id);
+      renderCart();
+    });
+
+    quantityControls.append(decreaseButton, quantity, increaseButton);
+
+    const subTotal = getSubTotal(product.id);
+
+    const subTotalDisplay = document.createElement("span");
+    subTotalDisplay.classList.add("cart-item-subtotal");
+    subTotalDisplay.textContent = `₹${subTotal}`;
+
+    const removeButton = document.createElement("button");
+    removeButton.classList.add("remove-cart-button");
+    removeButton.textContent = "Remove";
+
+    removeButton.addEventListener("click", () => {
+      removeFromCart(product.id);
+      renderCart();
+    });
+
     cartElement.append(
       name,
-      quantity,
-      decreaseButton,
-      increaseButton,
-      removeButton,
+      price,
+      quantityControls,
       subTotalDisplay,
+      removeButton,
     );
-    cartContainer.append(cartElement);
+
+    cartItems.append(cartElement);
   });
-  // cart Item Count
-  const itemCount = getCartItemCount();
 
-  const totalCartItem = document.createElement("span");
-  totalCartItem.textContent = `Total items = ${itemCount}`;
+  const cartSummary = document.createElement("div");
+  cartSummary.classList.add("cart-summary");
 
-  // Overall sub total
-  const overallTotal = getCartSubtotal();
+  const itemCount = document.createElement("p");
+  itemCount.classList.add("cart-item-count");
+  itemCount.textContent = `Total items: ${getCartItemCount()}`;
 
-  const overallSubCartTotal = document.createElement("span");
-  overallSubCartTotal.textContent = `Total =${overallTotal} `;
+  const overallTotal = document.createElement("p");
+  overallTotal.classList.add("cart-total");
+  overallTotal.textContent = `Total: ₹${getCartSubtotal()}`;
 
-  cartContainer.append(totalCartItem, overallSubCartTotal);
+  cartSummary.append(itemCount, overallTotal);
+
+  cartContainer.append(cartItems, cartSummary);
 }

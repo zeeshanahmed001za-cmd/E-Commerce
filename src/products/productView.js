@@ -6,66 +6,105 @@ import {
 import { addToCart } from "../cart/cartLogic.js";
 import { state } from "../state.js";
 import { renderCart } from "../cart/cartView.js";
+import {
+  addToWishList,
+  removeFromWishList,
+  isInWishList,
+} from "../wishlist/wishListLogic.js";
 
-const app = document.querySelector("#app");
+const productDisplay = document.querySelector("#product-list");
 const searchInput = document.querySelector("#search");
 const category = document.querySelector("#category");
 const sort = document.querySelector("#sort");
 
 export function renderProducts(products) {
-  app.replaceChildren();
+  productDisplay.replaceChildren();
   // handle empty results
   if (products.length === 0) {
     const message = document.createElement("p");
     message.textContent = "No products found";
-    app.append(message);
+    productDisplay.append(message);
   } else {
     products.forEach((productData) => {
       const productElement = document.createElement("div");
 
       productElement.dataset.id = productData.id;
 
-      productElement.textContent = `${productData.name} - ${productData.price}`;
+      // product name
+      const name = document.createElement("h3");
+      name.classList.add("product-name");
+      name.textContent = productData.name;
+
+      // product price
+      const price = document.createElement("p");
+      price.classList.add("product-price");
+      price.textContent = `₹${productData.price}`;
+      productElement.append(name, price);
+
       productElement.addEventListener("click", () => {
         const product = state.products.find(
           (product) => product.id === Number(productElement.dataset.id),
         );
         renderProductDetails(product);
       });
-      app.append(productElement);
+      productDisplay.append(productElement);
     });
   }
 }
+
 // product detail list Rendering
 function renderProductDetails(product) {
   const details = document.createElement("div");
+  details.classList.add("product-details");
+
+  // Header
+  const detailsHeader = document.createElement("div");
+  detailsHeader.classList.add("details-header");
 
   const name = document.createElement("h2");
+  name.classList.add("product-name");
   name.textContent = product.name;
 
+  const WishListToggleButton = document.createElement("button");
+  WishListToggleButton.classList.add("wishlist-button");
+
+  function updatewishListButton() {
+    WishListToggleButton.textContent = isInWishList(product.id) ? "❤️" : "♡";
+  }
+
+  WishListToggleButton.addEventListener("click", () => {
+    if (isInWishList(product.id)) {
+      removeFromWishList(product.id);
+    } else {
+      addToWishList(product.id);
+    }
+
+    updatewishListButton();
+  });
+
+  updatewishListButton();
+
+  detailsHeader.append(name, WishListToggleButton);
+
+  // Product information
   const price = document.createElement("p");
-  price.textContent = `Price : ${product.price}`;
+  price.classList.add("product-price");
+  price.textContent = `₹${product.price}`;
 
   const category = document.createElement("p");
-  category.textContent = ` category : ${product.category}`;
+  category.classList.add("product-category");
+  category.textContent = product.category;
 
   const description = document.createElement("p");
+  description.classList.add("product-description");
   description.textContent = product.description;
 
-  // const image = document.createElement("img");
-  // image.src = product.image;
-  // image.alt = product.name;
-  // image.loading = "lazy";
+  // Actions
+  const detailsActions = document.createElement("div");
+  detailsActions.classList.add("details-actions");
 
-  // back menu
-  const backButton = document.createElement("button");
-  backButton.textContent = "Back";
-
-  backButton.addEventListener("click", () => {
-    updateProducts();
-  });
-  // Add to cart
   const addToCartButton = document.createElement("button");
+  addToCartButton.classList.add("add-to-cart-button");
   addToCartButton.textContent = "Add to Cart";
 
   addToCartButton.addEventListener("click", () => {
@@ -73,15 +112,19 @@ function renderProductDetails(product) {
     renderCart();
   });
 
-  details.append(
-    name,
-    price,
-    category,
-    description,
-    addToCartButton,
-    backButton,
-  );
-  app.replaceChildren(details);
+  const backButton = document.createElement("button");
+  backButton.classList.add("back-button");
+  backButton.textContent = "Back";
+
+  backButton.addEventListener("click", () => {
+    updateProducts();
+  });
+
+  detailsActions.append(addToCartButton, backButton);
+
+  details.append(detailsHeader, price, category, description, detailsActions);
+
+  productDisplay.replaceChildren(details);
 }
 // Coordinator
 function updateProducts() {

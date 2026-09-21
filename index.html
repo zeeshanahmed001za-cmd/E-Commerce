@@ -7,24 +7,58 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <!-- App's Header -->
     <header>
       <h1>My store</h1>
     </header>
-    <input type="text" id="search" placeholder="Search Products..." />
-    <select id="category">
-      <option value="all">all</option>
-      <option value="electronics">electronics</option>
-      <option value="clothing">clothing</option>
-      <option value="home">Home</option>
-    </select>
-    <label for="sort">Sort by:</label>
-    <select id="sort">
-      <option value="default">default</option>
-      <option value="price-asc">Price: Low to High</option>
-      <option value="price-desc">Price: High to Low</option>
-    </select>
-    <div id="cart"></div>
-    <main id="app"></main>
+
+    <!-- App's main content-->
+    <main id="app">
+      <section id="products-view">
+        <header>
+          <h2>Products</h2>
+        </header>
+
+        <!-- product control -->
+        <div id="product-controls">
+          <input type="text" id="search" placeholder="Search Products..." />
+
+          <select id="category">
+            <option value="all">all</option>
+            <option value="electronics">electronics</option>
+            <option value="clothing">clothing</option>
+            <option value="home">Home</option>
+          </select>
+
+          <label for="sort">Sort by:</label>
+
+          <select id="sort">
+            <option value="default">default</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+          </select>
+        </div>
+
+        <!-- Product List -->
+        <div id="product-list"></div>
+      </section>
+
+      <!--cart section -->
+      <section id="cart-view">
+        <header><h2>Shopping Cart</h2></header>
+
+        <div id="cart"></div>
+      </section>
+
+      <!-- Wish list Section -->
+      <section id="wishList-View">
+        <header><h2>WishList</h2></header>
+        <div id="wishList"></div>
+      </section>
+    </main>
+
+    <!-- App's Footer -->
+    <footer></footer>
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>
