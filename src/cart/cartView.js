@@ -45,15 +45,18 @@ export function renderCart() {
   cartItems.classList.add("cart-items");
 
   products.forEach((product) => {
+    // Cart element appended to cartcontainer
     const cartElement = document.createElement("div");
     cartElement.classList.add("cart-item");
 
     cartElement.dataset.id = product.id;
 
+    // product name
     const name = document.createElement("h3");
     name.classList.add("cart-item-name");
     name.textContent = product.name;
 
+    // product price
     const price = document.createElement("p");
     price.classList.add("cart-item-price");
     price.textContent = `₹${product.price}`;
@@ -61,6 +64,7 @@ export function renderCart() {
     const quantityControls = document.createElement("div");
     quantityControls.classList.add("quantity-controls");
 
+    // Decrease quantity button
     const decreaseButton = document.createElement("button");
     decreaseButton.classList.add("quantity-button");
     decreaseButton.textContent = "-";
@@ -70,10 +74,12 @@ export function renderCart() {
       renderCart();
     });
 
+    // Total count of products
     const quantity = document.createElement("span");
     quantity.classList.add("cart-item-quantity");
     quantity.textContent = product.quantity;
 
+    //increase quantity button 
     const increaseButton = document.createElement("button");
     increaseButton.classList.add("quantity-button");
     increaseButton.textContent = "+";
@@ -85,12 +91,14 @@ export function renderCart() {
 
     quantityControls.append(decreaseButton, quantity, increaseButton);
 
+    // Subtotal imported from cartLogic
     const subTotal = getSubTotal(product.id);
 
     const subTotalDisplay = document.createElement("span");
     subTotalDisplay.classList.add("cart-item-subtotal");
     subTotalDisplay.textContent = `₹${subTotal}`;
 
+    // Remove item
     const removeButton = document.createElement("button");
     removeButton.classList.add("remove-cart-button");
     removeButton.textContent = "Remove";
@@ -111,6 +119,7 @@ export function renderCart() {
     cartItems.append(cartElement);
   });
 
+  // Summary
   const cartSummary = document.createElement("div");
   cartSummary.classList.add("cart-summary");
 
