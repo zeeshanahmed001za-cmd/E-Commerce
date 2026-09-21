@@ -11,11 +11,15 @@ import {
   removeFromWishList,
   isInWishList,
 } from "../wishlist/wishListLogic.js";
+import { renderWishListProducts } from "../wishlist/wishListView.js";
 
 const productDisplay = document.querySelector("#product-list");
 const searchInput = document.querySelector("#search");
 const category = document.querySelector("#category");
 const sort = document.querySelector("#sort");
+
+let currentWishListButton = null;
+let currentProductId = null;
 
 export function renderProducts(products) {
   productDisplay.replaceChildren();
@@ -80,9 +84,12 @@ function renderProductDetails(product) {
     }
 
     updatewishListButton();
+    renderWishListProducts();
   });
 
   updatewishListButton();
+  currentWishListButton = WishListToggleButton;
+  currentProductId = product.id;
 
   detailsHeader.append(name, WishListToggleButton);
 
@@ -125,6 +132,10 @@ function renderProductDetails(product) {
   details.append(detailsHeader, price, category, description, detailsActions);
 
   productDisplay.replaceChildren(details);
+}
+export function updateWishlistUI(productId) {
+  if (currentProductId !== productId) return;
+  currentWishListButton.textContent = isInWishList(productId) ? "❤️" : "♡";
 }
 // Coordinator
 function updateProducts() {
