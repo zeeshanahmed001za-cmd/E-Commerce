@@ -1,6 +1,8 @@
 import { clearCart } from "../cart/cartLogic.js";
-import { createOrder } from "../orders/orderLogic.js";
+import { state } from "../state.js";
+import { createOrder, saveOrder } from "../orders/orderLogic.js";
 import { renderCart } from "../cart/cartView.js";
+import { renderOrderHistory } from "../orders/orderHistoryView.js";
 
 export function initializationCheckoutForm() {
   const checkoutForm = document.querySelector("#checkout-form");
@@ -19,9 +21,13 @@ export function initializationCheckoutForm() {
     }
 
     const order = createOrder(checkoutData);
-    renderOrderConfimation(order);
+    saveOrder(order);
+    console.log(state.orders);
+    renderOrderConfirmation(order);
+
     clearCart();
     renderCart();
+    renderOrderHistory();
   });
 }
 
@@ -66,12 +72,12 @@ function validateCheckoutData(checkoutData) {
 
 // Rendering Order confimation logic
 
-function renderOrderConfimation(order) {
+function renderOrderConfirmation(order) {
   const confirmation = document.querySelector("#order-confirmation");
 
   confirmation.replaceChildren();
 
-  const heading = document.querySelector("h2");
+  const heading = document.createElement("h2");
   heading.textContent = "Order Placed successfully";
 
   const orderId = document.createElement("p");

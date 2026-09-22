@@ -5,6 +5,8 @@ export function createOrder(checkoutData) {
   const order = {
     orderId: crypto.randomUUID(),
 
+    createdAt: new Date().toISOString(),
+
     customer: {
       fullName: checkoutData.fullName,
       email: checkoutData.email,
@@ -29,4 +31,9 @@ export function createOrder(checkoutData) {
   };
 
   return order;
+}
+
+// saving orders
+export function saveOrder(order) {
+  state.orders.push(order);
 }
