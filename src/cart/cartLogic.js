@@ -66,3 +66,8 @@ export function getCartItemCount() {
   }, 0);
   return cartItemCount;
 }
+
+// clearing the cart
+export function clearCart() {
+  state.cart = [];
+}

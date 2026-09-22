@@ -1,3 +1,7 @@
+import { clearCart } from "../cart/cartLogic.js";
+import { createOrder } from "../orders/orderLogic.js";
+import { renderCart } from "../cart/cartView.js";
+
 export function initializationCheckoutForm() {
   const checkoutForm = document.querySelector("#checkout-form");
 
@@ -14,7 +18,10 @@ export function initializationCheckoutForm() {
       return;
     }
 
-    console.log(checkoutData);
+    const order = createOrder(checkoutData);
+    renderOrderConfimation(order);
+    clearCart();
+    renderCart();
   });
 }
 
@@ -24,6 +31,7 @@ function isValidEmail(email) {
 function isValidPhone(phone) {
   return /^\+?[0-9\s-]{7,15}$/.test(phone);
 }
+
 function validateCheckoutData(checkoutData) {
   const errors = {};
 
@@ -54,4 +62,23 @@ function validateCheckoutData(checkoutData) {
   }
 
   return errors;
+}
+
+// Rendering Order confimation logic
+
+function renderOrderConfimation(order) {
+  const confirmation = document.querySelector("#order-confirmation");
+
+  confirmation.replaceChildren();
+
+  const heading = document.querySelector("h2");
+  heading.textContent = "Order Placed successfully";
+
+  const orderId = document.createElement("p");
+  orderId.textContent = `Order Id : ${order.orderId}`;
+
+  const total = document.createElement("p");
+  total.textContent = `Total :  ₹${order.subTotal}`;
+
+  confirmation.append(heading, orderId, total);
 }
