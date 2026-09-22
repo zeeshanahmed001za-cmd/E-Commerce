@@ -57,6 +57,117 @@
         </header>
         <div id="wishList"></div>
       </section>
+
+      <!-- Check out section  -->
+      <section id="checkout-view">
+        <header>
+          <h2>Secure Checkout</h2>
+        </header>
+
+        <form id="checkout-form">
+          <!-- customer Information -->
+          <fieldset>
+            <legend>Customer Information</legend>
+
+            <div class="form-group">
+              <label for="full-name">Full Name</label>
+              <input
+                type="text"
+                id="full-name"
+                name="fullName"
+                autocomplete="name"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                autocomplete="email"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" />
+            </div>
+          </fieldset>
+
+          <!-- Shipping information -->
+          <fieldset>
+            <legend>Shipping Information</legend>
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                autocomplete="street-address"
+              />
+            </div>
+            <div class="form-group">
+              <label for="city">City</label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                autocomplete="address-level2"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="state">State</label>
+              <input
+                type="text"
+                id="state"
+                name="state"
+                autocomplete="address-level1"
+              />
+            </div>
+            <div class="form-group">
+              <label for="postal-code">Postal Code</label>
+              <input
+                type="text"
+                id="postal-code"
+                name="postalCode"
+                autocomplete="postal-code"
+              />
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input
+                type="text"
+                id="country"
+                name="country"
+                autocomplete="country-name"
+              />
+            </div>
+          </fieldset>
+
+          <!-- Payment Method -->
+          <fieldset>
+            <legend>Payment Method</legend>
+            <div class="form-group">
+              <label>
+                <input type="radio" name="paymentMethod" value="card" /> Card
+              </label>
+            </div>
+            <div class="form-group">
+              <label>
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="cash-on-delivery"
+                />
+                Cash on Delivery
+              </label>
+            </div>
+          </fieldset>
+          <button type="submit">Place Order</button>
+        </form>
+      </section>
     </main>
 
     <!-- App's Footer -->

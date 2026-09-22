@@ -7,8 +7,10 @@ import { loadProducts } from "./products/productsServices.js";
 import { renderProducts } from "./products/productView.js";
 import { state } from "./state.js";
 import { renderWishListProducts } from "./wishlist/wishListView.js";
+import { initializationCheckoutForm } from "./checkout/checkoutView.js";
 
 loadProducts();
 renderProducts(state.products);
 renderCart();
 renderWishListProducts();
+initializationCheckoutForm();
