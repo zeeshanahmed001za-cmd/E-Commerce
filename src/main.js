@@ -8,9 +8,11 @@ import { renderProducts } from "./products/productView.js";
 import { state } from "./state.js";
 import { renderWishListProducts } from "./wishlist/wishListView.js";
 import { initializationCheckoutForm } from "./checkout/checkoutView.js";
+import { renderOrderHistory } from "./orders/orderHistoryView.js";
 
 loadProducts();
 renderProducts(state.products);
 renderCart();
 renderWishListProducts();
 initializationCheckoutForm();
+renderOrderHistory();

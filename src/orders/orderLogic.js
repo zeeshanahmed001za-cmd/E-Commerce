@@ -1,5 +1,6 @@
 import { state } from "../state.js";
 import { getCartSubtotal } from "../cart/cartLogic.js";
+import { saveOrders } from "./orderStorage.js";
 
 export function createOrder(checkoutData) {
   const order = {
@@ -36,4 +37,6 @@ export function createOrder(checkoutData) {
 // saving orders
 export function saveOrder(order) {
   state.orders.push(order);
+
+  saveOrders(state.orders);
 }
