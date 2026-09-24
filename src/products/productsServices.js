@@ -19,6 +19,8 @@ export async function loadProducts() {
 
     state.products = apiProducts;
   } catch (error) {
-    console.log("error:", error.message);
+    state.error = error.message;
+  } finally {
+    state.isLoading = false;
   }
 }

@@ -11,8 +11,9 @@ import { initializationCheckoutForm } from "./checkout/checkoutView.js";
 import { renderOrderHistory } from "./orders/orderHistoryView.js";
 
 async function init() {
-  await loadProducts();
+  renderProducts(state.products);
 
+  await loadProducts();
   renderProducts(state.products);
   renderCart();
   renderWishListProducts();

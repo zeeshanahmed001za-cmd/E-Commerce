@@ -5,4 +5,6 @@ export const state = {
   cart: [],
   wishList: new Set(),
   orders: loadOrders(),
+  isLoading: true,
+  error: null,
 };

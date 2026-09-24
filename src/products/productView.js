@@ -24,7 +24,15 @@ let currentProductId = null;
 export function renderProducts(products) {
   productDisplay.replaceChildren();
   // handle empty results
-  if (products.length === 0) {
+  if (state.isLoading) {
+    const message = document.createElement("p");
+    message.textContent = "Loading products...";
+    productDisplay.append(message);
+  } else if (state.error) {
+    const message = document.createElement("p");
+    message.textContent = state.error;
+    productDisplay.append(message);
+  } else if (products.length === 0) {
     const message = document.createElement("p");
     message.textContent = "No products found";
     productDisplay.append(message);
