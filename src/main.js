@@ -9,12 +9,14 @@ import { state } from "./state.js";
 import { renderWishListProducts } from "./wishlist/wishListView.js";
 import { initializationCheckoutForm } from "./checkout/checkoutView.js";
 import { renderOrderHistory } from "./orders/orderHistoryView.js";
+import { loadCart } from "./orders/orderStorage.js";
 
 async function init() {
   renderProducts(state.products);
 
   await loadProducts();
   renderProducts(state.products);
+  state.cart = loadCart();
   renderCart();
   renderWishListProducts();
   initializationCheckoutForm();
