@@ -10,7 +10,7 @@ import { renderWishListProducts } from "./wishlist/wishListView.js";
 import { initializationCheckoutForm } from "./checkout/checkoutView.js";
 import { renderOrderHistory } from "./orders/orderHistoryView.js";
 import { loadCart } from "./orders/orderStorage.js";
-
+import { loadWishlist } from "./wishlist/wishListStorage.js";
 async function init() {
   renderProducts(state.products);
 
@@ -18,6 +18,7 @@ async function init() {
   renderProducts(state.products);
   state.cart = loadCart();
   renderCart();
+  state.wishList = loadWishlist();
   renderWishListProducts();
   initializationCheckoutForm();
   renderOrderHistory();
